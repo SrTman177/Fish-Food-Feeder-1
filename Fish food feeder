@@ -1,0 +1,235 @@
+
+#include <AccelStepper.h>
+const int DC_Pump = 9;  // the Arduino pin, which connects to the IN pin of relay
+const int DC_Wisk = 8; // Pin 8 s for the Wisk
+
+#define motorPin1  0      // IN1 on the ULN2003 driver
+#define motorPin2  1     // IN2 on the ULN2003 driver
+#define motorPin3  2     // IN3 on the ULN2003 driver
+#define motorPin4  3     // IN4 on the ULN2003 driver
+#define motorPin5 4
+#define motorPin6 5
+#define motorPin7 6
+#define motorPin8 7
+#define motorPin9 10
+#define motorPin10 11
+#define motorPin11 12
+#define motorPin12 13
+
+#define MotorInterfaceType 8
+
+AccelStepper door = AccelStepper(MotorInterfaceType, motorPin1, motorPin3, motorPin2, motorPin4);
+AccelStepper week1 = AccelStepper(MotorInterfaceType, motorPin5, motorPin6, motorPin7, motorPin8);
+AccelStepper week2 = AccelStepper(MotorInterfaceType, motorPin9, motorPin10, motorPin11, motorPin12);
+
+void setup() {
+  door.setMaxSpeed(1000);
+  week1.setMaxSpeed(1000);
+  week2.setMaxSpeed(1000);
+   
+  pinMode(DC_Pump, OUTPUT);// pin for the pump 
+  
+  pinMode(DC_Wisk, OUTPUT); // pin for the wisk
+
+}
+
+void loop() {
+  // delay(86400000)
+ 
+digitalWrite(DC_Pump, LOW); // tuns off the pump
+  Serial.println("week1 rotaion");
+  week1.setCurrentPosition(0); // Reset the position to 0:
+
+    // Run the motor forward at 500 steps/second until the motor reaches 512 steps (1/8 revolution):
+  while (week1.currentPosition() != 1024) {
+    week1.setSpeed(1000);
+    week1.runSpeed();
+  }
+  delay(250);
+  
+  digitalWrite(DC_Pump, HIGH); // turns the pump on for two seconds
+delay(50000);
+  digitalWrite(DC_Pump, LOW); // tuns off the pump
+ delay(15000);
+ /*igitalWrite(DC_Wisk, HIGH); // Mixes the sluury for two seconds
+  delay(2000);
+  digitalWrite(DC_Wisk, LOW); // turns the pump off
+  delay(500);*/
+    digitalWrite(DC_Pump, HIGH); // turns the pump on for two seconds
+delay(90000);
+  digitalWrite(DC_Pump, LOW); // tuns off the pump
+ delay(10000);
+  
+  Serial.println("door forward");
+  door.setCurrentPosition(0);// Set the current position to 0:
+  
+  // Run the motor forward at 500 steps/second until the motor reaches 8192 steps (2 revolutions):
+  while (door.currentPosition() != 6144){
+    door.setSpeed(1000);
+    door.runSpeed();
+  }
+    delay(250);
+    Serial.println ("door back");
+    door.setCurrentPosition(0);// Set the current position to 0:
+  
+  // Run the motor forward at 500 steps/second until the motor reaches -8192 steps (-2 revolutions):
+  while (door.currentPosition() != -6144) {
+    door.setSpeed(-1000);
+    door.runSpeed();
+  }
+    delay(250);
+  digitalWrite(DC_Pump, HIGH); // turns the pump on for two seconds
+delay(50000);
+  digitalWrite(DC_Pump, LOW); // tuns off the pump
+  delay(250);/*
+  digitalWrite(DC_Wisk, HIGH); // Mixes the sluury for two seconds
+  delay(2000);
+  digitalWrite(DC_Wisk, LOW); // turns the pump off
+  delay(500);*/
+  Serial.println("door forward");
+  
+  door.setCurrentPosition(0);// Set the current position to 0:
+  
+  // Run the motor forward at 500 steps/second until the motor reaches 8192 steps (2 revolutions):
+  while (door.currentPosition() != 6144) {
+    door.setSpeed(1000);
+    door.runSpeed();
+  }
+    delay(250);
+    Serial.println("door back");
+    door.setCurrentPosition(0);// Set the current position to 0:
+  
+  // Run the motor forward at 500 steps/second until the motor reaches -8192 steps (-2 revolutions):
+  while (door.currentPosition() != -6144) {
+    door.setSpeed(-1000);
+    door.runSpeed();
+  }
+  
+    delay(250);
+  digitalWrite(DC_Pump, LOW); // turns the pump on for two seconds
+ delay(50000);
+  digitalWrite(DC_Pump, HIGH); // tuns off the pump
+  delay(250);/*
+  digitalWrite(DC_Wisk, HIGH); // Mixes the sluury for two seconds
+  delay(2000);
+  digitalWrite(DC_Wisk, LOW); // turns the pump off
+  delay(500);*/
+  Serial.println("door forward");
+  door.setCurrentPosition(0);// Set the current position to 0:
+  
+  // Run the motor forward at 500 steps/second until the motor reaches 8192 steps (2 revolutions):
+  while (door.currentPosition() != 6144) {
+    door.setSpeed(1000);
+    door.runSpeed();
+  }
+    delay(250);
+    Serial.println("door back");
+    door.setCurrentPosition(0);// Set the current position to 0:
+  
+  // Run the motor forward at 500 steps/second until the motor reaches -8192 steps (-2 revolutions):
+  while (door.currentPosition() != -6144) {
+    door.setSpeed(-1000);
+    door.runSpeed();
+  }
+    delay(250);
+
+    
+// delay(86400000)
+  Serial.println("week2 rotaion");
+  week2.setCurrentPosition(0); // Reset the position to 0:
+
+    // Run the motor forward at 500 steps/second until the motor reaches 512 steps (1/8 revolution):
+  while (week2.currentPosition() !=   1024) {
+    week2.setSpeed(1000);
+    week2.runSpeed();
+ }
+  delay(250);
+  
+ digitalWrite(DC_Pump, HIGH); // turns the pump on for two seconds
+delay(50000);
+  digitalWrite(DC_Pump, LOW); // tuns off the pump
+ delay(15000);
+ /*igitalWrite(DC_Wisk, HIGH); // Mixes the sluury for two seconds
+  delay(2000);
+  digitalWrite(DC_Wisk, LOW); // turns the pump off
+  delay(500);*/
+    digitalWrite(DC_Pump, HIGH); // turns the pump on for two seconds
+delay(90000);
+  digitalWrite(DC_Pump, LOW); // tuns off the pump
+ delay(250);
+ 
+  Serial.println("door forward");
+  door.setCurrentPosition(0);// Set the current position to 0:
+  
+  // Run the motor forward at 500 steps/second until the motor reaches 8192 steps (2 revolutions):
+  while (door.currentPosition() != 6144) {
+    door.setSpeed(1000);
+    door.runSpeed();
+  }
+    delay(250);
+    Serial.println("door back");
+    door.setCurrentPosition(0);// Set the current position to 0:
+  
+  // Run the motor forward at 500 steps/second until the motor reaches -8192 steps (-2 revolutions):
+  while (door.currentPosition() != -6144) {
+    door.setSpeed(-1000);
+    door.runSpeed();
+  }
+    delay(250);
+  digitalWrite(DC_Pump, HIGH); // turns the pump on for two seconds
+ delay(50000);
+  digitalWrite(DC_Pump, LOW); // tuns off the pump
+  delay(250);/*
+  digitalWrite(DC_Wisk, HIGH); // Mixes the sluury for two seconds
+  delay(2000);
+  digitalWrite(DC_Wisk, LOW); // turns the pump off
+  delay(500);*/
+  Serial.println("door forward");
+  door.setCurrentPosition(0);// Set the current position to 0:
+  
+  // Run the motor forward at 500 steps/second until the motor reaches 8192 steps (2 revolutions):
+  while (door.currentPosition() != 6144) {
+    door.setSpeed(1000);
+    door.runSpeed();
+  }
+    delay(250);
+    Serial.println("door back");
+    door.setCurrentPosition(0);// Set the current position to 0:
+  
+  // Run the motor forward at 500 steps/second until the motor reaches -8192 steps (-2 revolutions):
+  while (door.currentPosition() != -6144) {
+    door.setSpeed(-1000);
+    door.runSpeed();
+  }
+    delay(250);
+  digitalWrite(DC_Pump, LOW); // turns the pump on for two seconds
+ delay(50000);
+  digitalWrite(DC_Pump, HIGH); // tuns off the pump
+  delay(250);/*
+  digitalWrite(DC_Wisk, HIGH); // Mixes the sluury for two seconds
+  delay(2000);
+  digitalWrite(DC_Wisk, LOW); // turns the pump off
+  delay(500);*/
+  Serial.println("door forward");
+  door.setCurrentPosition(0);// Set the current position to 0:
+  
+  // Run the motor forward at 500 steps/second until the motor reaches 8192 steps (2 revolutions):
+  while (door.currentPosition() != 6144) {
+    door.setSpeed(1000);
+    door.runSpeed();
+  }
+    delay(250);
+    Serial.println("door back");
+    door.setCurrentPosition(0);// Set the current position to 0:
+  
+  // Run the motor forward at 500 steps/second until the motor reaches -8192 steps (-2 revolutions):
+  while (door.currentPosition() != -6144) {
+    door.setSpeed(-1000);
+    door.runSpeed();
+  }
+    delay(250);
+    
+
+Serial.println("END");
+
+}
